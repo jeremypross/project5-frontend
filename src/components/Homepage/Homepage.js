@@ -9,8 +9,9 @@ class Homepage extends Component {
       articles: [],
       source: {
         query: ''
-      }
-    }
+      },
+      article: {}
+    };
   }
 
   handleChange(event) {
@@ -47,6 +48,35 @@ class Homepage extends Component {
     });
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+
+    fetch(`http://localhost:3000/articles`, {
+      method: "POST",
+      body: JSON.stringify({
+        article: {
+          author: `${this.state.article.author}`,
+          title: `${this.state.article.title}`,
+          description: `${this.state.article.description}`,
+          url: `${this.state.article.url}`,
+          urlToImage: `${this.state.article.urlToImage}`,
+          published: `${this.state.article.published}`,
+          user_id: window.localStorage.getItem('user_id')
+        }
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(() => {
+      // push to dashboard
+      // this.props.router.push('/dashboard');
+    })
+    .catch((err) => {
+      console.log("ERROR", err);
+    });
+  }
+
   render() {
     return (
       <div id="articles-page">
@@ -54,7 +84,7 @@ class Homepage extends Component {
         <div id="search-input">
           <h2>Top News</h2>
           <select name="query" onChange={this.handleChange.bind(this)} value={this.state.source.query} placeholder="Search News Sources" >
-            <option value=""></option>
+            <option value="">Choose your Source!</option>
             <option value="abc-news-au">ABC News (AU)</option>
             <option value="al-jazeera-english">Al Jazeera</option>
             <option value="ars-technica">Ars Technica</option>
@@ -67,7 +97,6 @@ class Homepage extends Component {
             <option value="cnbc">CNBC</option>
             <option value="cnn">CNN</option>
             <option value="daily-mail">Daily Mail</option>
-            <option value="die-zeit">Die Zeit</option>
             <option value="engadget">Engadget</option>
             <option value="entertainment-weekly">Entertainment Weekly</option>
             <option value="espn">ESPN</option>
@@ -98,6 +127,7 @@ class Homepage extends Component {
           <br />
           <button onClick={this.findArticles.bind(this)}>Latest Headlines!</button>
         </div>
+
         {/* RESULT SECTION */}
         <div className="article-results">
           {this.state.articles.map((article) => {
@@ -105,21 +135,20 @@ class Homepage extends Component {
               <div key={article.title} className="article">
                 <div>
                   <h3><a href={article.url}>{article.title}</a></h3>
-                  <a href={article.url}><img src={article.urlToImage} height="200"></img></a>
+                  <a href={article.url}><img src={article.urlToImage} height="200" /></a>
                   <p>{article.description}</p>
                   <p>{article.author}</p>
                   <p>{article.publishedAt}</p>
+                  <button onClick={this.handleSubmit.bind(this)}>Save Article</button>
                 </div>
               </div>
             );
           })}
         </div>
+        {/* <p>Source: <a href="https://newsapi.org/">News API</a></p> */}
       </div>
-    )
+    );
   }
-
-
-
 
 }
 

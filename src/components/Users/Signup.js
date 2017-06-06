@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { browserHistory } from "react-router";
 import update from "react-addons-update";
 
-// import Nav from "../Nav/Nav";
+import Nav from "../Nav/Nav";
 
 class SignUp extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class SignUp extends Component {
     })
     .then((results) => {
       results.json().then((data) => {
-        this.setState({ user:data });
+        user = data;
         // console.log("signup.js componentDidMount data:", data);
       });
     })
@@ -46,11 +46,11 @@ class SignUp extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    console.log(this.state.user);
+    console.log(this.state);
 
-    fetch(`https://localhost:3000/users/signup`, {
+    fetch(`http://localhost:3000/users/signup`, {
       method: "POST",
-      body: JSON.stringify(this.state),
+      body: JSON.stringify(this.state.user),
       headers: {
         "Content-Type": "application/json"
       }
@@ -68,9 +68,9 @@ class SignUp extends Component {
     return(
       <div id="signup-form">
         <div className="container">
-          <Nav />
           <div className="form-container">
             <h3>CREATE AN ACCOUNT</h3>
+            <Nav />
             <form onSubmit={this.handleSubmit.bind(this)}>
               <input name="first_name" type="text" placeholder="First Name" onChange={this.handleChange.bind(this)} /><br/>
               <input name="last_name" type="text" placeholder="Last Name" onChange={this.handleChange.bind(this)} /><br/>

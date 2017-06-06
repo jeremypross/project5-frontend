@@ -30,7 +30,7 @@ class Login extends Component {
   // POST request
   handleSubmit(event) {
     event.preventDefault();
-    fetch(`http://localhost:3000/login`, {
+    fetch(`http://localhost:3000/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -45,7 +45,7 @@ class Login extends Component {
         window.localStorage.setItem("user_id", jwt.token.user_id);
         window.localStorage.setItem("loggedin", jwt.token.loggedIn)
         // push to user's dashboard
-        this.props.router.push("/dashboard");
+        this.props.router.push("/");
       });
     })
     .catch(() => {
@@ -58,8 +58,8 @@ class Login extends Component {
       <div>
         <div id="login-form">
           <div className="container">
-            <Nav />
             <h3>LOG IN</h3>
+            <Nav />
             <div className="form-container">
               <form onSubmit={this.handleSubmit.bind(this)}>
                 <input name="email" type="email" placeholder="email" onChange={this.handleChange.bind(this)} />

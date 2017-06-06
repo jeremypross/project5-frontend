@@ -10,6 +10,15 @@
   text-align: center;
 }
 
+#nav-bar {
+  list-style-type: none;
+  padding-left: 0;
+}
+
 #search-input {
+  text-align: center;
+}
+
+#login-form, #signup-form {
   text-align: center;
 }

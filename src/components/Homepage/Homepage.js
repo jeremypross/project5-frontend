@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import update from "react-addons-update";
+import Nav from "../Nav/Nav";
 
 class Homepage extends Component {
   constructor(props) {
@@ -83,6 +84,7 @@ class Homepage extends Component {
         {/* SEARCH BAR */}
         <div id="search-input">
           <h2>Top News</h2>
+          <Nav />
           <select name="query" onChange={this.handleChange.bind(this)} value={this.state.source.query} placeholder="Search News Sources" >
             <option value="">Choose your Source!</option>
             <option value="abc-news-au">ABC News (AU)</option>

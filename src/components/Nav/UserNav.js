@@ -17,12 +17,12 @@ class UserNav extends Component {
     return (
       <div id="nav">
         <ul id="nav-bar">
-          <h1>KITCHEN SINK</h1>
+          <h1>Dashboard</h1>
           <li>
-            <Link className="nav-link" to="/api">SEARCH</Link>
+            <Link className="nav-link" to="/">SEARCH</Link>
           </li>
           <li>
-            <Link className="nav-link" to="/" onClick={this.handleSubmit.bind(this)}>LOG OUT</Link>
+            <Link className="nav-link" to="/login" onClick={this.handleSubmit.bind(this)}>LOG OUT</Link>
           </li>
         </ul>
       </div>

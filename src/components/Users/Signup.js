@@ -21,7 +21,7 @@ class SignUp extends Component {
     })
     .then((results) => {
       results.json().then((data) => {
-        user = data;
+        user: data;
         // console.log("signup.js componentDidMount data:", data);
       });
     })

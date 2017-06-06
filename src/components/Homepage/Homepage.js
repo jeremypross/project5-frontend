@@ -52,30 +52,37 @@ class Homepage extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    fetch(`http://localhost:3000/articles`, {
-      method: "POST",
-      body: JSON.stringify({
-        article: {
-          author: `${this.state.article.author}`,
-          title: `${this.state.article.title}`,
-          description: `${this.state.article.description}`,
-          url: `${this.state.article.url}`,
-          urlToImage: `${this.state.article.urlToImage}`,
-          published: `${this.state.article.published}`,
-          user_id: window.localStorage.getItem('user_id')
+    // check if user is logged in to see if they can save recipes
+    // if not user is pushed to login page
+    if(window.localStorage.getItem('loggedin')) {
+      fetch(`http://localhost:3000/articles`, {
+        method: "POST",
+        body: JSON.stringify({
+          article: {
+            author: `${this.state.article.author}`,
+            title: `${this.state.article.title}`,
+            description: `${this.state.article.description}`,
+            url: `${this.state.article.url}`,
+            urlToImage: `${this.state.article.urlToImage}`,
+            published: `${this.state.article.published}`,
+            user_id: window.localStorage.getItem('user_id')
+          }
+        }),
+        headers: {
+          "Content-Type": "application/json"
         }
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    .then(() => {
-      // push to dashboard
-      // this.props.router.push('/dashboard');
-    })
-    .catch((err) => {
-      console.log("ERROR", err);
-    });
+      })
+      .then(() => {
+        // push to dashboard
+        this.props.router.push('/dashboard');
+      })
+      .catch((err) => {
+        console.log("ERROR", err);
+      });
+    // if user isn't logged in and tries to save article - send to login page
+    } else {
+      this.props.router.push('/login');
+    }
   }
 
   render() {
@@ -92,7 +99,7 @@ class Homepage extends Component {
             <option value="ars-technica">Ars Technica</option>
             <option value="associated-press">AP</option>
             <option value="bbc-news">BBC NEWS</option>
-            <option value="bbc-sport">BBC Sport</option>
+            <option value="bbc-sport">BBC Sports</option>
             <option value="bloomberg">Bloomberg</option>
             <option value="business-insider">Business Insider</option>
             <option value="buzzfeed">Buzzfeed</option>
@@ -121,7 +128,7 @@ class Homepage extends Component {
             <option value="the-economist">The Economist</option>
             <option value="the-guardian-uk">The Guardian (UK)</option>
             <option value="the-telegraph">The Telegraph</option>
-            <option value="the-wall-street-jounral">The Wall Street Journal</option>
+            <option value="the-wall-street-journal">The Wall Street Journal</option>
             <option value="time">Time</option>
             <option value="usa-today">USA Today</option>
           </select>
@@ -140,7 +147,7 @@ class Homepage extends Component {
                   <a href={article.url}><img src={article.urlToImage} height="200" /></a>
                   <p>{article.description}</p>
                   <p>{article.author}</p>
-                  <p>{article.publishedAt}</p>
+                  {/* <p>{article.publishedAt}</p> */}
                   <button onClick={this.handleSubmit.bind(this)}>Save Article</button>
                 </div>
               </div>
@@ -151,7 +158,6 @@ class Homepage extends Component {
       </div>
     );
   }
-
 }
 
 export default Homepage;

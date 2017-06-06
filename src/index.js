@@ -7,10 +7,16 @@ import "./styles/bootstrap.min.css";
 import "./styles/style.css";
 
 import Homepage from "./components/Homepage/Homepage";
+import Login from "./components/Users/Login";
+import Signup from "./components/Users/Signup";
+
+
 
 ReactDom.render(
   <Router history={browserHistory}>
     <Route path="/" component={Homepage} />
+    <Route path="/signup" component={Signup} />
+    <Route path="/login" component={Login} />
   </Router>
   , document.getElementById("app")
 );

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { browserHistory } from "react-router";
 import update from "react-addons-update";
 
-import Nav from "../Nav/Nav";
+// import Nav from "../Nav/Nav";
 
 class SignUp extends Component {
   constructor(props) {
